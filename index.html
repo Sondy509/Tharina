@@ -1,0 +1,2129 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Joyeux Anniversaire Stephka ❤️</title>
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            min-height: 100vh;
+            overflow-x: hidden;
+            font-family: "Segoe UI", Arial, sans-serif;
+            color: white;
+
+            background:
+                radial-gradient(
+                    circle at 20% 20%,
+                    rgba(255, 90, 150, .18),
+                    transparent 30%
+                ),
+                radial-gradient(
+                    circle at 80% 80%,
+                    rgba(255, 30, 100, .15),
+                    transparent 30%
+                ),
+                linear-gradient(
+                    135deg,
+                    #19030d,
+                    #3b071d,
+                    #650b2d,
+                    #24030f
+                );
+        }
+
+        /* =========================
+           CANVAS DES ÉTOILES
+        ========================== */
+
+        #stars {
+            position: fixed;
+            inset: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 0;
+            pointer-events: none;
+        }
+
+        /* =========================
+           ÉCRAN D'OUVERTURE
+        ========================== */
+
+        #openingScreen {
+            position: fixed;
+            inset: 0;
+            z-index: 1000;
+
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+
+            padding: 25px;
+
+            background:
+                radial-gradient(
+                    circle at center,
+                    rgba(255, 30, 110, .18),
+                    transparent 45%
+                ),
+                linear-gradient(
+                    135deg,
+                    #16020b,
+                    #3c061c,
+                    #17020b
+                );
+
+            transition:
+                opacity 1s ease,
+                visibility 1s ease;
+        }
+
+        #openingScreen.hidden {
+            opacity: 0;
+            visibility: hidden;
+            pointer-events: none;
+        }
+
+        .opening-content {
+            position: relative;
+            z-index: 2;
+            width: min(500px, 100%);
+        }
+
+        .opening-subtitle {
+            font-size: .95rem;
+            letter-spacing: 4px;
+            text-transform: uppercase;
+            color: #ffb4cf;
+            margin-bottom: 12px;
+        }
+
+        .opening-title {
+            font-size: clamp(2.2rem, 8vw, 4rem);
+            font-weight: 800;
+            line-height: 1.05;
+
+            background:
+                linear-gradient(
+                    90deg,
+                    #fff,
+                    #ff8db7,
+                    #fff
+                );
+
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+
+            margin-bottom: 8px;
+        }
+
+        .opening-name {
+            font-size: clamp(1.5rem, 5vw, 2.3rem);
+            color: #ff7fab;
+            margin-bottom: 35px;
+            font-family: Georgia, serif;
+        }
+
+        /* =========================
+           PREMIER CADEAU
+        ========================== */
+
+        .gift-container {
+            width: 190px;
+            height: 180px;
+            margin: 0 auto 30px;
+            position: relative;
+
+            cursor: pointer;
+
+            filter:
+                drop-shadow(
+                    0 20px 35px rgba(255, 0, 90, .35)
+                );
+        }
+
+        .gift {
+            position: absolute;
+            width: 150px;
+            height: 125px;
+            left: 20px;
+            top: 50px;
+
+            transform-origin: bottom center;
+
+            transition:
+                transform .7s cubic-bezier(.2,.9,.3,1),
+                opacity .5s ease;
+        }
+
+        .gift-body {
+            position: absolute;
+            left: 0;
+            bottom: 0;
+
+            width: 150px;
+            height: 105px;
+
+            border-radius: 7px;
+
+            background:
+                linear-gradient(
+                    90deg,
+                    #d81058,
+                    #ff3e7d,
+                    #d81058
+                );
+
+            box-shadow:
+                inset 0 0 0 3px rgba(255,255,255,.12),
+                inset 15px 0 20px rgba(0,0,0,.12);
+        }
+
+        .gift-body::after {
+            content: "";
+
+            position: absolute;
+
+            left: 62px;
+            top: 0;
+
+            width: 27px;
+            height: 100%;
+
+            background: rgba(255,255,255,.2);
+        }
+
+        .gift-lid {
+            position: absolute;
+
+            left: -8px;
+            top: 0;
+
+            width: 166px;
+            height: 35px;
+
+            border-radius: 7px;
+
+            background:
+                linear-gradient(
+                    90deg,
+                    #ed1d63,
+                    #ff5a91,
+                    #ed1d63
+                );
+
+            box-shadow:
+                0 5px 12px rgba(0,0,0,.25);
+
+            z-index: 3;
+
+            transition:
+                transform .8s cubic-bezier(.2,.9,.3,1);
+        }
+
+        .gift-ribbon-v {
+            position: absolute;
+
+            left: 62px;
+            bottom: 0;
+
+            width: 27px;
+            height: 105px;
+
+            background: rgba(255,255,255,.22);
+
+            z-index: 4;
+        }
+
+        .gift-ribbon-h {
+            position: absolute;
+
+            left: 0;
+            top: 10px;
+
+            width: 150px;
+            height: 18px;
+
+            background: rgba(255,255,255,.16);
+
+            z-index: 5;
+        }
+
+        .bow {
+            position: absolute;
+            left: 49px;
+            top: -33px;
+
+            width: 55px;
+            height: 45px;
+
+            z-index: 10;
+        }
+
+        .bow::before,
+        .bow::after {
+            content: "";
+
+            position: absolute;
+            top: 8px;
+
+            width: 38px;
+            height: 28px;
+
+            background: #ff4f89;
+
+            border:
+                3px solid rgba(255,255,255,.13);
+
+            border-radius:
+                70% 25% 70% 25%;
+        }
+
+        .bow::before {
+            left: -22px;
+            transform: rotate(-28deg);
+        }
+
+        .bow::after {
+            right: -22px;
+            transform: rotate(28deg);
+        }
+
+        .bow-center {
+            position: absolute;
+
+            width: 24px;
+            height: 24px;
+
+            left: 16px;
+            top: 11px;
+
+            border-radius: 50%;
+
+            background: #ff78a7;
+
+            z-index: 3;
+        }
+
+        .gift.open {
+            transform: scale(1.08);
+        }
+
+        .gift.open .gift-lid {
+            transform:
+                translateY(-80px)
+                rotate(-8deg);
+        }
+
+        .gift.open .bow {
+            animation: bowFly .8s forwards;
+        }
+
+        @keyframes bowFly {
+
+            to {
+                transform:
+                    translateY(-80px)
+                    rotate(-20deg);
+
+                opacity: 0;
+            }
+        }
+
+        .opening-text {
+            color: #ffd6e3;
+            font-size: 1rem;
+            margin-bottom: 22px;
+        }
+
+        .open-button {
+            border: none;
+            outline: none;
+
+            padding: 15px 27px;
+
+            border-radius: 999px;
+
+            color: white;
+
+            background:
+                linear-gradient(
+                    135deg,
+                    #ff3978,
+                    #c90048
+                );
+
+            font-size: 1rem;
+            font-weight: 700;
+
+            cursor: pointer;
+
+            box-shadow:
+                0 10px 30px rgba(255,0,80,.3);
+
+            transition:
+                transform .25s ease,
+                box-shadow .25s ease;
+        }
+
+        .open-button:hover {
+            transform:
+                translateY(-3px)
+                scale(1.03);
+
+            box-shadow:
+                0 15px 35px rgba(255,0,80,.45);
+        }
+
+        .open-button:active {
+            transform: scale(.97);
+        }
+
+        /* =========================
+           COEURS FLOTTANTS
+        ========================== */
+
+        #hearts-container {
+            position: fixed;
+            inset: 0;
+
+            pointer-events: none;
+
+            z-index: 20;
+
+            overflow: hidden;
+        }
+
+        .floating-heart {
+            position: absolute;
+
+            bottom: -50px;
+
+            font-size: 20px;
+
+            opacity: 0;
+
+            animation:
+                floatHeart linear forwards;
+        }
+
+        @keyframes floatHeart {
+
+            0% {
+                transform:
+                    translateY(0)
+                    translateX(0)
+                    rotate(0deg)
+                    scale(.7);
+
+                opacity: 0;
+            }
+
+            10% {
+                opacity: .9;
+            }
+
+            100% {
+                transform:
+                    translateY(-110vh)
+                    translateX(var(--move))
+                    rotate(360deg)
+                    scale(1.2);
+
+                opacity: 0;
+            }
+        }
+
+        /* =========================
+           MAIN
+        ========================== */
+
+        #mainContent {
+            position: relative;
+            z-index: 2;
+
+            min-height: 100vh;
+
+            display: flex;
+            align-items: center;
+            justify-content: center;
+
+            padding: 60px 20px;
+
+            opacity: 0;
+            visibility: hidden;
+
+            transition:
+                opacity 1.2s ease,
+                visibility 1.2s ease;
+        }
+
+        #mainContent.visible {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        .main-wrapper {
+            width: min(850px, 100%);
+        }
+
+        .birthday-card {
+            position: relative;
+
+            padding:
+                clamp(30px, 6vw, 60px);
+
+            border-radius: 30px;
+
+            background:
+                linear-gradient(
+                    145deg,
+                    rgba(255,255,255,.10),
+                    rgba(255,255,255,.04)
+                );
+
+            border:
+                1px solid rgba(255,255,255,.15);
+
+            box-shadow:
+                0 30px 90px rgba(0,0,0,.4),
+                inset 0 1px 0 rgba(255,255,255,.08);
+
+            backdrop-filter: blur(15px);
+
+            overflow: hidden;
+        }
+
+        .birthday-card::before {
+            content: "";
+
+            position: absolute;
+
+            width: 280px;
+            height: 280px;
+
+            top: -130px;
+            right: -100px;
+
+            border-radius: 50%;
+
+            background:
+                rgba(255,50,120,.13);
+
+            filter: blur(20px);
+        }
+
+        .mini-heart {
+            font-size: 2rem;
+            margin-bottom: 15px;
+
+            animation:
+                heartbeat 1.5s infinite;
+        }
+
+        @keyframes heartbeat {
+
+            0%,100% {
+                transform: scale(1);
+            }
+
+            15% {
+                transform: scale(1.25);
+            }
+
+            30% {
+                transform: scale(1);
+            }
+        }
+
+        .birthday-title {
+            font-size:
+                clamp(2.2rem, 7vw, 4rem);
+
+            line-height: 1;
+
+            margin-bottom: 15px;
+
+            font-family: Georgia, serif;
+
+            background:
+                linear-gradient(
+                    90deg,
+                    #fff,
+                    #ff8db7,
+                    #fff
+                );
+
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .birthday-name {
+            color: #ff7da9;
+
+            font-size:
+                clamp(2rem, 6vw, 3.2rem);
+
+            font-family: Georgia, serif;
+
+            margin-bottom: 30px;
+        }
+
+        .divider {
+            width: 100px;
+            height: 3px;
+
+            margin:
+                0 auto 30px;
+
+            border-radius: 10px;
+
+            background:
+                linear-gradient(
+                    90deg,
+                    transparent,
+                    #ff5a91,
+                    transparent
+                );
+        }
+
+        .message {
+            position: relative;
+            z-index: 2;
+
+            color: #ffe8f0;
+
+            font-size: 1.05rem;
+
+            line-height: 1.9;
+
+            text-align: left;
+        }
+
+        .message p {
+            margin-bottom: 18px;
+        }
+
+        .message .highlight {
+            color: #ff9fbe;
+            font-weight: 700;
+        }
+
+        .signature {
+            margin-top: 30px;
+
+            text-align: right;
+
+            font-family: Georgia, serif;
+
+            font-size: 1.4rem;
+
+            color: #ff9abb;
+        }
+
+        /* =========================
+           DEUXIÈME SURPRISE
+        ========================== */
+
+        .second-surprise {
+            margin-top: 50px;
+
+            padding-top: 40px;
+
+            border-top:
+                1px solid rgba(255,255,255,.12);
+
+            text-align: center;
+        }
+
+        .surprise-label {
+            color: #ffc5d8;
+            margin-bottom: 25px;
+        }
+
+        .second-gift-container {
+            width: 150px;
+            height: 150px;
+
+            margin:
+                0 auto 25px;
+
+            cursor: pointer;
+
+            position: relative;
+        }
+
+        .second-gift {
+            position: absolute;
+
+            width: 120px;
+            height: 100px;
+
+            left: 15px;
+            top: 40px;
+
+            transition:
+                transform .7s ease;
+        }
+
+        .second-gift-body {
+            position: absolute;
+
+            width: 120px;
+            height: 80px;
+
+            bottom: 0;
+
+            border-radius: 6px;
+
+            background:
+                linear-gradient(
+                    90deg,
+                    #9c1748,
+                    #e82e69,
+                    #9c1748
+                );
+
+            box-shadow:
+                0 15px 30px rgba(0,0,0,.25);
+        }
+
+        .second-gift-body::after {
+            content: "";
+
+            position: absolute;
+
+            left: 48px;
+
+            width: 23px;
+            height: 100%;
+
+            background:
+                rgba(255,255,255,.17);
+        }
+
+        .second-gift-lid {
+            position: absolute;
+
+            left: -6px;
+            top: 0;
+
+            width: 132px;
+            height: 28px;
+
+            border-radius: 6px;
+
+            background:
+                linear-gradient(
+                    90deg,
+                    #b51d51,
+                    #f34b7e,
+                    #b51d51
+                );
+
+            transition:
+                transform .8s ease;
+
+            z-index: 4;
+        }
+
+        .second-ribbon {
+            position: absolute;
+
+            left: 48px;
+            bottom: 0;
+
+            width: 23px;
+            height: 80px;
+
+            background:
+                rgba(255,255,255,.2);
+
+            z-index: 5;
+        }
+
+        .second-bow {
+            position: absolute;
+
+            width: 45px;
+            height: 35px;
+
+            left: 38px;
+            top: -27px;
+
+            z-index: 10;
+        }
+
+        .second-bow::before,
+        .second-bow::after {
+            content: "";
+
+            position: absolute;
+
+            width: 30px;
+            height: 22px;
+
+            top: 5px;
+
+            background: #ff578b;
+
+            border-radius:
+                70% 25% 70% 25%;
+        }
+
+        .second-bow::before {
+            left: -14px;
+            transform: rotate(-25deg);
+        }
+
+        .second-bow::after {
+            right: -14px;
+            transform: rotate(25deg);
+        }
+
+        .second-bow-center {
+            position: absolute;
+
+            width: 18px;
+            height: 18px;
+
+            left: 14px;
+            top: 8px;
+
+            border-radius: 50%;
+
+            background: #ff8eaf;
+        }
+
+        .second-gift-container.open
+        .second-gift {
+            transform: scale(1.05);
+        }
+
+        .second-gift-container.open
+        .second-gift-lid {
+            transform:
+                translateY(-65px)
+                rotate(7deg);
+        }
+
+        .second-gift-container.open
+        .second-bow {
+            animation:
+                secondBow .8s forwards;
+        }
+
+        @keyframes secondBow {
+
+            to {
+                transform:
+                    translateY(-70px)
+                    rotate(20deg);
+
+                opacity: 0;
+            }
+        }
+
+        .second-button {
+            border: none;
+
+            padding: 13px 24px;
+
+            border-radius: 999px;
+
+            color: white;
+
+            background:
+                linear-gradient(
+                    135deg,
+                    #ff4f88,
+                    #b70c49
+                );
+
+            font-weight: 700;
+
+            cursor: pointer;
+
+            transition: .25s;
+        }
+
+        .second-button:hover {
+            transform:
+                translateY(-2px);
+
+            box-shadow:
+                0 10px 30px rgba(255,0,90,.3);
+        }
+
+        /* =========================
+           MODAL LETTRE
+        ========================== */
+
+        #letterModal {
+            position: fixed;
+
+            inset: 0;
+
+            z-index: 2000;
+
+            display: flex;
+
+            align-items: center;
+            justify-content: center;
+
+            padding: 20px;
+
+            background:
+                rgba(10,0,5,.78);
+
+            backdrop-filter: blur(8px);
+
+            opacity: 0;
+            visibility: hidden;
+
+            transition: .4s ease;
+        }
+
+        #letterModal.show {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        .letter {
+            width: min(650px, 100%);
+
+            max-height: 85vh;
+
+            overflow-y: auto;
+
+            padding:
+                clamp(30px, 6vw, 50px);
+
+            border-radius: 25px;
+
+            background:
+                linear-gradient(
+                    145deg,
+                    #5a0a2b,
+                    #270516
+                );
+
+            border:
+                1px solid rgba(255,255,255,.15);
+
+            box-shadow:
+                0 30px 100px rgba(0,0,0,.6);
+
+            transform:
+                scale(.85)
+                translateY(30px);
+
+            transition:
+                transform .5s ease;
+        }
+
+        #letterModal.show .letter {
+            transform:
+                scale(1)
+                translateY(0);
+        }
+
+        .letter h2 {
+            font-family: Georgia, serif;
+
+            color: #ff9abb;
+
+            font-size: 2rem;
+
+            margin-bottom: 25px;
+
+            text-align: center;
+        }
+
+        .letter p {
+            color: #ffe7ef;
+
+            line-height: 1.9;
+
+            margin-bottom: 18px;
+        }
+
+        .letter-close {
+            display: block;
+
+            margin:
+                30px auto 0;
+
+            padding:
+                12px 25px;
+
+            border: none;
+
+            border-radius: 999px;
+
+            background: #ff4e88;
+
+            color: white;
+
+            font-weight: 700;
+
+            cursor: pointer;
+        }
+
+        /* =========================
+           RESPONSIVE
+        ========================== */
+
+        @media (max-width: 600px) {
+
+            #mainContent {
+                padding: 35px 15px;
+            }
+
+            .birthday-card {
+                padding: 30px 20px;
+                border-radius: 23px;
+            }
+
+            .message {
+                font-size: .98rem;
+                line-height: 1.8;
+            }
+
+            .signature {
+                text-align: center;
+            }
+
+            .opening-title {
+                font-size: 2.4rem;
+            }
+
+            .opening-name {
+                font-size: 1.8rem;
+            }
+
+            .gift-container {
+                transform: scale(.9);
+            }
+
+            .second-surprise {
+                margin-top: 40px;
+            }
+        }
+
+        /* =========================
+           CONFETTIS
+        ========================== */
+
+        .confetti {
+            position: fixed;
+
+            width: 8px;
+            height: 12px;
+
+            top: -20px;
+
+            z-index: 1500;
+
+            pointer-events: none;
+
+            animation:
+                confettiFall linear forwards;
+        }
+
+        @keyframes confettiFall {
+
+            to {
+                transform:
+                    translateY(110vh)
+                    rotate(720deg);
+
+                opacity: 0;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- =========================
+         AUDIO
+    ========================== -->
+
+    <audio id="musicOswald" loop preload="auto">
+        <source
+            src="ton-anniversaire.mp3"
+            type="audio/mpeg"
+        >
+    </audio>
+
+    <audio id="musicSecond" preload="auto">
+        <source
+            src="toby.mp3"
+            type="audio/mpeg"
+        >
+    </audio>
+
+
+    <!-- =========================
+         CANVAS ÉTOILES
+    ========================== -->
+
+    <canvas id="stars"></canvas>
+
+
+    <!-- =========================
+         COEURS
+    ========================== -->
+
+    <div id="hearts-container"></div>
+
+
+    <!-- =========================
+         ÉCRAN D'OUVERTURE
+    ========================== -->
+
+    <section id="openingScreen">
+
+        <div class="opening-content">
+
+            <div class="opening-subtitle">
+                Une surprise pour toi
+            </div>
+
+            <h1 class="opening-title">
+                JOYEUX ANNIVERSAIRE
+            </h1>
+
+            <div class="opening-name">
+                Stephka ❤️
+            </div>
+
+
+            <!-- PREMIER CADEAU -->
+
+            <div
+                class="gift-container"
+                onclick="ouvrirCadeau()"
+                id="firstGift"
+            >
+
+                <div class="gift">
+
+                    <div class="bow">
+                        <div class="bow-center"></div>
+                    </div>
+
+                    <div class="gift-lid"></div>
+
+                    <div class="gift-body">
+
+                        <div class="gift-ribbon-v"></div>
+
+                        <div class="gift-ribbon-h"></div>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <div class="opening-text">
+                J'ai préparé quelque chose de spécial pour toi...
+            </div>
+
+            <button
+                class="open-button"
+                onclick="ouvrirCadeau()"
+            >
+                Clique ici pour ouvrir ton cadeau ❤️
+            </button>
+
+        </div>
+
+    </section>
+
+
+    <!-- =========================
+         CONTENU PRINCIPAL
+    ========================== -->
+
+    <main id="mainContent">
+
+        <div class="main-wrapper">
+
+            <article class="birthday-card">
+
+                <div class="mini-heart">
+                    ❤️
+                </div>
+
+                <h1 class="birthday-title">
+                    Joyeux anniversaire
+                </h1>
+
+                <div class="birthday-name">
+                    Stephka
+                </div>
+
+                <div class="divider"></div>
+
+
+                <div class="message">
+
+                    <p>
+                        Aujourd'hui est une journée particulière,
+                        parce qu'elle célèbre la naissance d'une
+                        personne qui mérite vraiment d'être célébrée.
+                    </p>
+
+                    <p>
+                        <span class="highlight">
+                            Stephka,
+                        </span>
+                        je te souhaite un très joyeux anniversaire.
+                        Que cette nouvelle année de ta vie soit remplie
+                        de bonheur, de paix, de réussite et de magnifiques
+                        moments.
+                    </p>
+
+                    <p>
+                        Que chacun de tes rêves trouve petit à petit
+                        son chemin vers la réalité. Que tu aies toujours
+                        la force de continuer lorsque les choses deviennent
+                        difficiles et toujours une raison de sourire
+                        lorsque les journées sont plus belles.
+                    </p>
+
+                    <p>
+                        Je te souhaite de rencontrer des personnes
+                        sincères, de vivre des expériences inoubliables
+                        et de profiter pleinement de chaque petit bonheur
+                        que la vie t'offrira.
+                    </p>
+
+                    <p>
+                        Et surtout, n'oublie jamais la personne
+                        extraordinaire que tu es.
+                        ❤️
+                    </p>
+
+                    <p>
+                        Aujourd'hui, profite de ta journée,
+                        souris beaucoup, mange ton gâteau,
+                        accepte tous les bisous et laisse-toi
+                        simplement célébrer.
+                    </p>
+
+                    <p>
+                        Que cette nouvelle année soit encore plus belle
+                        que la précédente et qu'elle t'apporte
+                        tout ce que ton cœur désire.
+                    </p>
+
+                </div>
+
+
+                <div class="signature">
+                    Avec beaucoup d'affection ❤️
+                </div>
+
+
+                <!-- =========================
+                     DEUXIÈME SURPRISE
+                ========================== -->
+
+                <div class="second-surprise">
+
+                    <div class="surprise-label">
+                        Mais attends...
+                        <br>
+                        il reste encore une dernière surprise 🎁
+                    </div>
+
+
+                    <div
+                        class="second-gift-container"
+                        id="secondGift"
+                        onclick="ouvrirDeuxiemeCadeau()"
+                    >
+
+                        <div class="second-gift">
+
+                            <div class="second-bow">
+                                <div class="second-bow-center"></div>
+                            </div>
+
+                            <div class="second-gift-lid"></div>
+
+                            <div class="second-gift-body">
+
+                                <div class="second-ribbon"></div>
+
+                            </div>
+
+                        </div>
+
+                    </div>
+
+
+                    <button
+                        class="second-button"
+                        onclick="ouvrirDeuxiemeCadeau()"
+                    >
+                        Ouvrir la dernière surprise 💝
+                    </button>
+
+                </div>
+
+            </article>
+
+        </div>
+
+    </main>
+
+
+    <!-- =========================
+         MODAL LETTRE
+    ========================== -->
+
+    <div id="letterModal">
+
+        <div class="letter">
+
+            <h2>
+                Une dernière petite chose... 💌
+            </h2>
+
+            <p>
+                Stephka,
+            </p>
+
+            <p>
+                Si tu es arrivée jusqu'ici, c'est que tu as découvert
+                toutes les petites surprises que j'avais préparées
+                pour toi.
+            </p>
+
+            <p>
+                Je voulais simplement te rappeler que certaines
+                personnes rendent la vie un peu plus belle simplement
+                par leur présence.
+            </p>
+
+            <p>
+                En ce jour spécial, je te souhaite sincèrement
+                beaucoup de bonheur, de réussite, d'amour et de paix.
+            </p>
+
+            <p>
+                Continue de sourire, de rêver et d'avancer.
+                Le meilleur reste encore à venir. ❤️
+            </p>
+
+            <p>
+                Profite de chaque seconde de cette nouvelle année
+                de ta vie.
+            </p>
+
+            <p
+                style="
+                    text-align:center;
+                    font-family:Georgia,serif;
+                    font-size:1.4rem;
+                    color:#ff9abb;
+                "
+            >
+                Joyeux anniversaire Stephka ❤️
+            </p>
+
+
+            <button
+                class="letter-close"
+                onclick="fermerLettre()"
+            >
+                Fermer 💕
+            </button>
+
+        </div>
+
+    </div>
+
+
+    <script>
+
+        /* =====================================================
+           RÉCUPÉRATION DES ÉLÉMENTS
+        ====================================================== */
+
+        const openingScreen =
+            document.getElementById("openingScreen");
+
+        const mainContent =
+            document.getElementById("mainContent");
+
+        const firstGift =
+            document.getElementById("firstGift");
+
+        const secondGift =
+            document.getElementById("secondGift");
+
+        const musicOswald =
+            document.getElementById("musicOswald");
+
+        const musicSecond =
+            document.getElementById("musicSecond");
+
+        const letterModal =
+            document.getElementById("letterModal");
+
+        const heartsContainer =
+            document.getElementById("hearts-container");
+
+
+        /* =====================================================
+           VARIABLES
+        ====================================================== */
+
+        let firstGiftOpened = false;
+
+        let secondGiftOpened = false;
+
+        let heartsInterval = null;
+
+
+        /* =====================================================
+           PREMIER CADEAU
+        ====================================================== */
+
+        function ouvrirCadeau() {
+
+            if (firstGiftOpened) {
+                return;
+            }
+
+            firstGiftOpened = true;
+
+
+            /* Animation */
+
+            firstGift.classList.add("open");
+
+
+            /* Coeurs */
+
+            creerExplosionCoeurs();
+
+
+            /* Confettis */
+
+            creerConfettis();
+
+
+            /* Stop deuxième musique */
+
+            musicSecond.pause();
+
+            musicSecond.currentTime = 0;
+
+
+            /* Démarrer première musique */
+
+            musicOswald.volume = 0.75;
+
+            musicOswald.play()
+                .catch(function(error) {
+
+                    console.log(
+                        "La musique n'a pas pu démarrer :",
+                        error
+                    );
+
+                });
+
+
+            /* Afficher contenu */
+
+            setTimeout(function() {
+
+                openingScreen.classList.add("hidden");
+
+                mainContent.classList.add("visible");
+
+            }, 1200);
+
+
+            /* Retirer écran */
+
+            setTimeout(function() {
+
+                openingScreen.style.display = "none";
+
+            }, 2300);
+
+
+            /* Coeurs flottants */
+
+            commencerCoeursFlottants();
+        }
+
+
+        /* =====================================================
+           DEUXIÈME CADEAU
+        ====================================================== */
+
+        function ouvrirDeuxiemeCadeau() {
+
+            if (secondGiftOpened) {
+                return;
+            }
+
+            secondGiftOpened = true;
+
+
+            /* Animation du cadeau */
+
+            secondGift.classList.add("open");
+
+
+            /* Effets */
+
+            creerExplosionCoeurs();
+
+            creerConfettis();
+
+
+            /* Arrêter musique 1 */
+
+            musicOswald.pause();
+
+            musicOswald.currentTime = 0;
+
+
+            /* Démarrer musique 2 */
+
+            musicSecond.currentTime = 0;
+
+            musicSecond.volume = 0.85;
+
+            musicSecond.play()
+                .catch(function(error) {
+
+                    console.log(
+                        "La deuxième musique n'a pas pu démarrer :",
+                        error
+                    );
+
+                });
+
+
+            /* Afficher lettre */
+
+            setTimeout(function() {
+
+                ouvrirLettre();
+
+            }, 900);
+        }
+
+
+        /* =====================================================
+           OUVRIR LETTRE
+        ====================================================== */
+
+        function ouvrirLettre() {
+
+            letterModal.classList.add("show");
+
+        }
+
+
+        /* =====================================================
+           FERMER LETTRE
+           
+           IMPORTANT :
+           - Musique 2 STOP
+           - Musique 1 REPREND
+           - Cadeau 2 RESET
+           - Possibilité de recommencer
+        ====================================================== */
+
+        function fermerLettre() {
+
+            /*
+             * Fermer la lettre
+             */
+            letterModal.classList.remove("show");
+
+
+            /*
+             * STOP MUSIQUE 2
+             */
+            musicSecond.pause();
+
+            musicSecond.currentTime = 0;
+
+
+            /*
+             * REPRENDRE MUSIQUE 1
+             */
+            musicOswald.currentTime = 0;
+
+            musicOswald.volume = 0.75;
+
+            musicOswald.play()
+                .catch(function(error) {
+
+                    console.log(
+                        "La première musique n'a pas pu redémarrer :",
+                        error
+                    );
+
+                });
+
+
+            /*
+             * RESET DU DEUXIÈME CADEAU
+             */
+            secondGift.classList.remove("open");
+
+
+            /*
+             * RESET DE L'ANIMATION DU BOW
+             *
+             * On force le navigateur à recréer
+             * l'animation CSS.
+             */
+            const secondBow =
+                secondGift.querySelector(".second-bow");
+
+            secondBow.style.animation = "none";
+
+            /*
+             * Force un reflow.
+             */
+            void secondBow.offsetWidth;
+
+            /*
+             * On remet l'animation normale.
+             */
+            secondBow.style.animation = "";
+
+
+            /*
+             * Permettre de rouvrir le cadeau
+             */
+            secondGiftOpened = false;
+        }
+
+
+        /* =====================================================
+           FERMER LETTRE EN CLIQUANT À L'EXTÉRIEUR
+        ====================================================== */
+
+        letterModal.addEventListener(
+            "click",
+            function(event) {
+
+                if (event.target === letterModal) {
+
+                    fermerLettre();
+
+                }
+
+            }
+        );
+
+
+        /* =====================================================
+           COEURS FLOTTANTS
+        ====================================================== */
+
+        function creerCoeur() {
+
+            const heart =
+                document.createElement("div");
+
+            heart.className =
+                "floating-heart";
+
+
+            const hearts = [
+                "❤️",
+                "💕",
+                "💖",
+                "💗",
+                "💓",
+                "💘"
+            ];
+
+
+            heart.textContent =
+                hearts[
+                    Math.floor(
+                        Math.random() *
+                        hearts.length
+                    )
+                ];
+
+
+            heart.style.left =
+                Math.random() * 100 + "%";
+
+
+            const size =
+                15 + Math.random() * 22;
+
+            heart.style.fontSize =
+                size + "px";
+
+
+            const duration =
+                6 + Math.random() * 7;
+
+            heart.style.animationDuration =
+                duration + "s";
+
+
+            const move =
+                (Math.random() - .5) * 180;
+
+            heart.style.setProperty(
+                "--move",
+                move + "px"
+            );
+
+
+            heartsContainer.appendChild(
+                heart
+            );
+
+
+            setTimeout(function() {
+
+                heart.remove();
+
+            }, (duration + 1) * 1000);
+        }
+
+
+        function commencerCoeursFlottants() {
+
+            /*
+             * Empêcher plusieurs setInterval
+             * si nécessaire.
+             */
+            if (heartsInterval !== null) {
+                return;
+            }
+
+
+            heartsInterval =
+                setInterval(function() {
+
+                    creerCoeur();
+
+                }, 700);
+        }
+
+
+        /* =====================================================
+           EXPLOSION DE COEURS
+        ====================================================== */
+
+        function creerExplosionCoeurs() {
+
+            const emojis = [
+                "❤️",
+                "💖",
+                "💕",
+                "💗",
+                "💓",
+                "💘"
+            ];
+
+
+            for (let i = 0; i < 35; i++) {
+
+                const heart =
+                    document.createElement("div");
+
+
+                heart.textContent =
+                    emojis[
+                        Math.floor(
+                            Math.random() *
+                            emojis.length
+                        )
+                    ];
+
+
+                heart.style.position =
+                    "fixed";
+
+                heart.style.left =
+                    "50%";
+
+                heart.style.top =
+                    "50%";
+
+                heart.style.zIndex =
+                    "1600";
+
+                heart.style.pointerEvents =
+                    "none";
+
+
+                heart.style.fontSize =
+                    (
+                        15 +
+                        Math.random() * 25
+                    ) + "px";
+
+
+                const angle =
+                    Math.random() *
+                    Math.PI * 2;
+
+
+                const distance =
+                    100 +
+                    Math.random() * 300;
+
+
+                const x =
+                    Math.cos(angle) *
+                    distance;
+
+
+                const y =
+                    Math.sin(angle) *
+                    distance;
+
+
+                heart.animate(
+
+                    [
+                        {
+                            transform:
+                                "translate(-50%, -50%) scale(.3)",
+
+                            opacity: 1
+                        },
+
+                        {
+                            transform:
+                                `translate(
+                                    calc(-50% + ${x}px),
+                                    calc(-50% + ${y}px)
+                                )
+                                scale(1.3)
+                                rotate(360deg)`,
+
+                            opacity: 0
+                        }
+                    ],
+
+                    {
+                        duration:
+                            900 +
+                            Math.random() * 800,
+
+                        easing:
+                            "cubic-bezier(.2,.8,.3,1)"
+                    }
+
+                );
+
+
+                document.body.appendChild(
+                    heart
+                );
+
+
+                setTimeout(function() {
+
+                    heart.remove();
+
+                }, 1800);
+            }
+        }
+
+
+        /* =====================================================
+           CONFETTIS
+        ====================================================== */
+
+        function creerConfettis() {
+
+            for (let i = 0; i < 70; i++) {
+
+                const confetti =
+                    document.createElement("div");
+
+
+                confetti.className =
+                    "confetti";
+
+
+                confetti.style.left =
+                    Math.random() * 100 + "%";
+
+
+                confetti.style.width =
+                    (
+                        5 +
+                        Math.random() * 7
+                    ) + "px";
+
+
+                confetti.style.height =
+                    (
+                        7 +
+                        Math.random() * 12
+                    ) + "px";
+
+
+                confetti.style.transform =
+                    `rotate(
+                        ${Math.random() * 360}deg
+                    )`;
+
+
+                const duration =
+                    2.5 +
+                    Math.random() * 3;
+
+
+                confetti.style.animationDuration =
+                    duration + "s";
+
+
+                const colors = [
+                    "#ff4f88",
+                    "#ff9fbe",
+                    "#ffd1df",
+                    "#ffffff",
+                    "#e91e63",
+                    "#ffccdd"
+                ];
+
+
+                confetti.style.background =
+                    colors[
+                        Math.floor(
+                            Math.random() *
+                            colors.length
+                        )
+                    ];
+
+
+                document.body.appendChild(
+                    confetti
+                );
+
+
+                setTimeout(function() {
+
+                    confetti.remove();
+
+                }, (duration + .5) * 1000);
+            }
+        }
+
+
+        /* =====================================================
+           CANVAS ÉTOILES
+        ====================================================== */
+
+        const canvas =
+            document.getElementById("stars");
+
+        const ctx =
+            canvas.getContext("2d");
+
+
+        let stars = [];
+
+
+        function resizeCanvas() {
+
+            canvas.width =
+                window.innerWidth;
+
+            canvas.height =
+                window.innerHeight;
+
+            creerEtoiles();
+        }
+
+
+        function creerEtoiles() {
+
+            stars = [];
+
+
+            const count =
+                Math.floor(
+                    (
+                        window.innerWidth *
+                        window.innerHeight
+                    ) / 9000
+                );
+
+
+            for (let i = 0; i < count; i++) {
+
+                stars.push({
+
+                    x:
+                        Math.random() *
+                        canvas.width,
+
+                    y:
+                        Math.random() *
+                        canvas.height,
+
+                    radius:
+                        Math.random() *
+                        1.5 + .2,
+
+                    alpha:
+                        Math.random() *
+                        .8 + .2,
+
+                    speed:
+                        Math.random() *
+                        .02 + .005
+                });
+            }
+        }
+
+
+        function dessinerEtoiles() {
+
+            ctx.clearRect(
+                0,
+                0,
+                canvas.width,
+                canvas.height
+            );
+
+
+            stars.forEach(function(star) {
+
+                star.alpha +=
+                    star.speed *
+                    (
+                        Math.random() > .5
+                            ? 1
+                            : -1
+                    );
+
+
+                if (star.alpha > 1) {
+                    star.alpha = 1;
+                }
+
+
+                if (star.alpha < .1) {
+                    star.alpha = .1;
+                }
+
+
+                ctx.beginPath();
+
+
+                ctx.arc(
+                    star.x,
+                    star.y,
+                    star.radius,
+                    0,
+                    Math.PI * 2
+                );
+
+
+                ctx.fillStyle =
+                    `rgba(
+                        255,
+                        220,
+                        235,
+                        ${star.alpha}
+                    )`;
+
+
+                ctx.fill();
+            });
+
+
+            requestAnimationFrame(
+                dessinerEtoiles
+            );
+        }
+
+
+        window.addEventListener(
+            "resize",
+            resizeCanvas
+        );
+
+
+        resizeCanvas();
+
+        dessinerEtoiles();
+
+
+        /* =====================================================
+           PROTECTION AUDIO
+        ====================================================== */
+
+        /*
+         * Si musique 2 démarre,
+         * musique 1 doit être arrêtée.
+         */
+
+        musicSecond.addEventListener(
+            "play",
+            function() {
+
+                musicOswald.pause();
+
+            }
+        );
+
+
+        /*
+         * Si musique 1 démarre pendant que
+         * musique 2 joue, on arrête musique 1.
+         */
+
+        musicOswald.addEventListener(
+            "play",
+            function() {
+
+                if (!musicSecond.paused) {
+
+                    musicOswald.pause();
+
+                }
+
+            }
+        );
+
+    </script>
+
+</body>
+</html>
